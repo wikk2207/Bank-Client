@@ -8,21 +8,28 @@ const routes = [
     path: '/',
     name: 'login',
     component: function () {
-      return import('../views/Login.vue')
+      return import('../views/Login.vue');
     }
   },
   {
     path: '/register',
     name: 'register',
     component: function () {
-      return import( '../components/RegistrationPage.vue')
+      return import( '../components/RegistrationPage.vue');
     }
   },
   {
     path: '/history',
     name: 'history',
     component: function () {
-      return import( '../components/HistoryPage.vue')
+      return import( '../components/HistoryPage.vue');
+    }
+  },
+  {
+    path: '/createtransfer',
+    name: 'createtransfer',
+    component: function () {
+      return import( '../components/CreateTransferPage.vue');
     }
   }
 ]

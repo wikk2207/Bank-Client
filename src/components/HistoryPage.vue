@@ -71,10 +71,10 @@ export default {
   },
   methods: {
       handlePressNewTransfer(){
-
+          router.push("/createtransfer");
       },
       handlePressMyAccount(){
-
+          router.push("/");
       },
       handlePressLogOut(){
         localStorage.removeItem('token');
