@@ -63,6 +63,8 @@ import axios from "axios";
 import { sha3_512 } from "js-sha3";
 var validator = require("email-validator");
 axios.defaults.baseURL = "http://localhost:4000";
+import router from '../router/index';
+
 export default {
   name: "RegistrationPage",
   data() {
@@ -130,7 +132,7 @@ export default {
                 this.snackText = response.data.message;
                 this.snackbar = true;
                 setTimeout(function() {
-                  window.location.href = "/";
+                  router.push("/");
                 }, 3000);
               }
             },
@@ -143,7 +145,7 @@ export default {
       }
     },
     handlePressLogin() {
-      window.location.href = "/";
+      router.push("/");
     }
   }
 };

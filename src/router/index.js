@@ -15,7 +15,14 @@ const routes = [
     path: '/register',
     name: 'register',
     component: function () {
-      return import( '../views/Registration.vue')
+      return import( '../components/RegistrationPage.vue')
+    }
+  },
+  {
+    path: '/history',
+    name: 'history',
+    component: function () {
+      return import( '../components/HistoryPage.vue')
     }
   }
 ]

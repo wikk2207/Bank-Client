@@ -48,6 +48,7 @@
 import axios from "axios";
 import { sha3_512 } from "js-sha3";
 axios.defaults.baseURL = "http://localhost:4000";
+import router from '../router/index';
 
 export default {
   name: "LoginPage",
@@ -85,15 +86,15 @@ export default {
           })
           .then(
             response => {
-              if (response.data.status != 201) {
+              if (response.data.status != 200) {
                 this.snackText = response.data.message;
                 this.snackbar = true;
               } else {
                 this.snackText = response.data.message;
                 this.snackbar = true;
-                setTimeout(function() {
-                  window.location.href = "/";
-                }, 3000);
+                  localStorage.setItem('token', response.data.token);
+                  router.push("/history");
+                  //router.push({name:'history', params: {id: response.data.id, token: response.data.token}})
               }
             },
             error => {
@@ -105,7 +106,7 @@ export default {
       }
     },
     handlePressRegister() {
-      window.location.href = "/register";
+      router.push("/register");
     }
   }
 };
