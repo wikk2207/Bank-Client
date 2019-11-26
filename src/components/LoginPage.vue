@@ -5,6 +5,9 @@
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
+              <v-toolbar color="primary" dark flat>
+                <v-toolbar-title>Logowanie</v-toolbar-title>
+              </v-toolbar>
               <v-card-text>
                 <v-form>
                   <v-text-field
@@ -27,10 +30,20 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
+                <v-btn
+                  :disabled="disabled"
+                  text
+                  small
+                  @click="handlePressForgetPassword()"
+                >Nie pamiętam hasła</v-btn>
+                <v-btn
+                  :disabled="disabled"
+                  text
+                  @click="handlePressRegister()"
+                  class="btn-register"
+                >Zarejestruj się</v-btn>
                 <v-spacer />
-                <v-btn text small @click="handlePressForgetPassword()">Nie pamiętam hasła</v-btn>
-                <v-btn @click="handlePressLogin()" color="primary">Zaloguj się</v-btn>
-                <v-btn text @click="handlePressRegister()" class="btn-register">Zarejestruj się</v-btn>
+                <v-btn :disabled="disabled" @click="handlePressLogin()" color="primary">Zaloguj się</v-btn>
               </v-card-actions>
             </v-card>
             <v-snackbar v-model="snackbar" :timeout="timeout">
@@ -48,16 +61,17 @@
 import axios from "axios";
 import { sha3_512 } from "js-sha3";
 axios.defaults.baseURL = "http://localhost:4000";
-import router from '../router/index';
+import router from "../router/index";
 
 export default {
   name: "LoginPage",
   data() {
     return {
-       snackbar: false,
+      snackbar: false,
       timeout: 3000,
       snackText: "",
       showPassword: false,
+      disabled: false,
       input: {
         login: "",
         password: ""
@@ -65,18 +79,17 @@ export default {
       rules: {
         required: value => {
           return !!value || "Pole nie może być puste";
-        },
+        }
       }
     };
   },
   methods: {
     async handlePressLogin() {
-        if (
-        this.input.login === "" ||
-        this.input.password === "" 
-      ) {
+      this.disabled = true;
+      if (this.input.login === "" || this.input.password === "") {
         this.snackText = "Pola nie mogą być puste";
         this.snackbar = true;
+        this.disabled = false;
       } else {
         var pass = await sha3_512(this.input.password + this.input.login);
         axios
@@ -89,15 +102,17 @@ export default {
               if (response.data.status != 200) {
                 this.snackText = response.data.message;
                 this.snackbar = true;
+                this.disabled = false;
               } else {
                 this.snackText = response.data.message;
                 this.snackbar = true;
-                  localStorage.setItem('token', response.data.token);
-                  router.push("/history");
-                  //router.push({name:'history', params: {id: response.data.id, token: response.data.token}})
+                localStorage.setItem("token", response.data.token);
+                router.push("/history");
+                //router.push({name:'history', params: {id: response.data.id, token: response.data.token}})
               }
             },
             error => {
+              this.disabled = false;
               /* eslint-disable no-console */
               console.log(error);
               /* eslint-enable no-console */
@@ -107,6 +122,9 @@ export default {
     },
     handlePressRegister() {
       router.push("/register");
+    },
+    handlePressForgetPassword() {
+      router.push("/resetpassword");
     }
   }
 };

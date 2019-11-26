@@ -14,7 +14,7 @@
                 <v-data-table
                 :headers="headers"
                 :items="transfers"
-                :items-per-page="-1"
+                :items-per-page="15"
                 class="elevation-1"
               ></v-data-table>
             </v-col>

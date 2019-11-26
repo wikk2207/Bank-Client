@@ -38,6 +38,20 @@ const routes = [
     component: function () {
       return import( '../components/ConfirmTransferPage.vue');
     }
+  },
+  {
+    path: '/createdtransfer',
+    name: 'createdtransfer',
+    component: function () {
+      return import( '../components/CreatedTransferPage.vue');
+    }
+  },
+  {
+    path: '/resetpassword',
+    name: 'resetpassword',
+    component: function () {
+      return import( '../components/ResetPasswordPage.vue');
+    }
   }
 ]
 

@@ -20,9 +20,13 @@
                 </v-row>
               </v-card-text>
               <v-card-actions>
-                <v-btn @click="handlePressBack()" color="primary">Powrót</v-btn>
+                <v-btn :disabled="disabled" text @click="handlePressBack()" color="primary">Powrót</v-btn>
                 <v-spacer />
-                <v-btn @click="handlePressConfirm()" color="primary">Wykonaj przelew</v-btn>
+                <v-btn
+                  :disabled="disabled"
+                  @click="handlePressConfirm()"
+                  color="primary"
+                >Wykonaj przelew</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -41,7 +45,9 @@ export default {
   name: "ConfirmTransferPage",
   props: ["account_number", "amount", "title"],
   data() {
-    return {};
+    return {
+      disabled: false
+    };
   },
   methods: {
     handlePressBack() {
@@ -55,6 +61,7 @@ export default {
       });
     },
     handlePressConfirm() {
+      this.disabled = true;
       axios
         .post("api/create/transfer", {
           headers: {
@@ -66,21 +73,21 @@ export default {
         })
         .then(
           response => {
-              /* eslint-disable no-console */
-            console.log(response);
-            /* eslint-enable no-console */
-            if (response.data.status != 200) {
+            if (response.status != 200) {
               this.snackText = response.data.message;
               this.snackbar = true;
+              this.disabled = false;
             } else {
-              //var transferId = response.data.transferId;
-              /* eslint-disable no-console */
-              console.log(response.data.transferId);
-              /* eslint-enable no-console */
-              router.push("/history");
+              router.push({
+                name: "createdtransfer",
+                params: {
+                  transferId: response.data.transferId,
+                }
+              });
             }
           },
           error => {
+            this.disabled = false;
             /* eslint-disable no-console */
             console.log(error);
             /* eslint-enable no-console */
