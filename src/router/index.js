@@ -31,6 +31,13 @@ const routes = [
     component: function () {
       return import( '../components/CreateTransferPage.vue');
     }
+  },
+  {
+    path: '/confirmtransfer',
+    name: 'confirmtransfer',
+    component: function () {
+      return import( '../components/ConfirmTransferPage.vue');
+    }
   }
 ]
 

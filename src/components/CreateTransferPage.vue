@@ -76,9 +76,15 @@ export default {
       }
     };
   },
+  beforeMount() {
+      this.input.account_number=this.$route.params.account_number;
+      this.input.amount=this.$route.params.amount;
+      this.input.title=this.$route.params.title;
+
+  },
   methods: {
       handlePressConfirm() {
-         router.push({name:'history',
+         router.push({name:'confirmtransfer',
           params: {
               account_number: this.input.account_number,
             amount: this.input.amount,
