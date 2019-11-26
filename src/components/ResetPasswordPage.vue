@@ -77,7 +77,7 @@ export default {
           })
           .then(
             response => {
-              if (response.data.status != 200) {
+              if (response.status != 200) {
                 this.snackText = response.data.message;
                 this.snackbar = true;
               } else {
