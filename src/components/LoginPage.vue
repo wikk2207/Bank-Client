@@ -30,17 +30,8 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn
-                  :disabled="disabled"
-                  text
-                  small
-                  @click="handlePressForgetPassword()"
-                >Nie pamiętam hasła</v-btn>
-                <v-btn
-                  :disabled="disabled"
-                  text
-                  @click="handlePressRegister()"
-                  class="btn-register"
+                <v-btn  :disabled="disabled"   text  small @click="handlePressForgetPassword()">Nie pamiętam hasła</v-btn>
+                <v-btn :disabled="disabled" text  @click="handlePressRegister()" class="btn-register"
                 >Zarejestruj się</v-btn>
                 <v-spacer />
                 <v-btn :disabled="disabled" @click="handlePressLogin()" color="primary">Zaloguj się</v-btn>

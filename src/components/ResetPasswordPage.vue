@@ -22,7 +22,7 @@
               <v-card-actions>
                 <v-btn text @click="handlePressBack()">Powrót</v-btn>
                 <v-spacer />
-                <v-btn @click="handlePressRegister()" color="primary">Resetuj</v-btn>
+                <v-btn @click="handlePressReset()" color="primary">Resetuj</v-btn>
               </v-card-actions>
             </v-card>
             <v-snackbar v-model="snackbar" :timeout="timeout">
@@ -63,48 +63,33 @@ export default {
     };
   },
   methods: {
-    async handlePressRegister() {
-      if (
-        this.input.login === "" ||
-        this.input.email === "" ||
-        this.input.password1 === "" ||
-        this.input.password2 === ""
-      ) {
+    async handlePressReset() {
+      if ( this.input.email === "") {
         this.snackText = "Pole nie może być puste";
         this.snackbar = true;
-      } else if (
-        !validator.validate(this.input.email) ||
-        !this.input.password1.localeCompare(this.input.password2) === 0 ||
-        !this.input.password1 >= 6
-      ) {
+      } else if (!validator.validate(this.input.email)) {
         this.snackText = "Nieprawidłowe dane";
         this.snackbar = true;
       } else {
-        //axios
-          /*.post("/api/register", {
-            login: this.input.login,
+        axios
+          .post("/api/reset/password", {
             email: this.input.email,
-            password: pass
           })
           .then(
             response => {
-              if (response.data.status != 201) {
+              if (response.status != 200) {
                 this.snackText = response.data.message;
                 this.snackbar = true;
               } else {
-                this.snackText = response.data.message;
-                this.snackbar = true;
-                setTimeout(function() {
                   router.push("/");
-                }, 3000);
               }
             },
             error => {
-              // eslint-disable no-console 
+              /* eslint-disable no-console */
               console.log(error);
-              // eslint-enable no-console 
+              /* eslint-enable no-console */
             }
-          );*/
+          );
       }
     },
     handlePressBack() {
