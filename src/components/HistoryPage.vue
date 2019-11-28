@@ -61,6 +61,9 @@ export default {
               account_number: element.account_number
             };
             this.transfers.push(newTransfer);
+             if(response.data.token) {
+                localStorage.setItem("token", );
+              }
           })
          
       }) .catch(error => {

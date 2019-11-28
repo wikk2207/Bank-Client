@@ -24,7 +24,7 @@
                 </v-row>
               </v-card-text>
               <v-card-actions>
-                 <v-spacer/>
+                <v-spacer />
                 <v-btn @click="handlePressOk()" color="primary">Ok</v-btn>
               </v-card-actions>
             </v-card>
@@ -49,43 +49,45 @@ export default {
       account_number: "",
       amount: "",
       title: "",
-      date: "",
+      date: ""
     };
   },
   beforeMount() {
-      /* eslint-disable no-console */
-              console.log(this.$route.params.transferId);
-              /* eslint-enable no-console */
-        var transfer = this.$route.params.transferId;
-      axios
+    /* eslint-disable no-console */
+    console.log(this.$route.params.transferId);
+    /* eslint-enable no-console */
+    var transfer = this.$route.params.transferId;
+    axios
       .get("api/transfer", {
-          headers: {
-              'x-access-token': localStorage.getItem('token'),
-              'transferId': transfer,
-          },
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+          transferId: transfer
+        }
       })
       .then(response => {
-           /* eslint-disable no-console */
-              console.log(response);
-              /* eslint-enable no-console */
-        if(response.status!=200) {
-            /* eslint-disable no-console */
-              console.log(response);
-              /* eslint-enable no-console */
-        } else {
-
-            this.id= response.data.transfer.id;
-      this.account_number=response.data.transfer.account_number;
-      this.amount=response.data.transfer.amount;
-      this.title=response.data.transfer.title;
-      this.date=response.data.transfer.created;
+        /* eslint-disable no-console */
+        console.log(response);
+        /* eslint-enable no-console */
+        if (response.data.token) {
+          localStorage.setItem("token");
         }
-         
-      }) .catch(error => {
-            /* eslint-disable no-console */
-              console.log(error);
-              /* eslint-enable no-console */
-          });
+        if (response.status != 200) {
+          /* eslint-disable no-console */
+          console.log(response);
+          /* eslint-enable no-console */
+        } else {
+          this.id = response.data.transfer.id;
+          this.account_number = response.data.transfer.account_number;
+          this.amount = response.data.transfer.amount;
+          this.title = response.data.transfer.title;
+          this.date = response.data.transfer.created;
+        }
+      })
+      .catch(error => {
+        /* eslint-disable no-console */
+        console.log(error);
+        /* eslint-enable no-console */
+      });
   },
   methods: {
     handlePressOk() {
