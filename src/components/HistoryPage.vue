@@ -17,6 +17,10 @@
                 :items-per-page="15"
                 class="elevation-1"
               ></v-data-table>
+              <v-snackbar v-model="snackbar" :timeout="timeout">
+              {{ snackText }}
+              <v-btn color="blue" text @click="snackbar = false">Zamknij</v-btn>
+            </v-snackbar>
             </v-col>
         </v-row>
     </v-content>
@@ -33,6 +37,9 @@ export default {
   props: ['id', 'token'],
   data() {
     return {
+      snackbar: false,
+      timeout: 3000,
+      snackText: "",
       transfers: [],
       headers: [
         { text: "Nr przelewu", value: "id" },
@@ -74,7 +81,8 @@ export default {
           router.push("/createtransfer");
       },
       handlePressMyAccount(){
-          router.push("/");
+          this.snackText = "Work in progress";
+          this.snackbar = true;
       },
       handlePressLogOut(){
         localStorage.removeItem('token');
